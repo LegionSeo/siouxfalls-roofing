@@ -1,0 +1,64 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import PageHero from '../../components/PageHero.astro';
+import SideRail from '../../components/SideRail.astro';
+import TownRoofing from '../../components/TownRoofing.astro';
+import { townPageBySlug, townPagesContent } from '../../content/town-pages';
+import { townPlaceBySlug } from '../../content/town-places';
+import { faqItemsFor, fillTokens, townBlockBySlug } from '../../content/town-roofing';
+import { breadcrumb, serviceNode } from '../../lib/page-schema';
+import { faqNode } from '../../lib/schema';
+import { SITE } from '../../config/site';
+
+export function getStaticPaths() {
+  return townPagesContent.map((page) => ({ params: { town: page.slug } }));
+}
+
+const { town } = Astro.params;
+const page = townPageBySlug(town);
+if (!page) throw new Error(`Missing town page ${town}`);
+if (!page.documentTitle.includes(page.name)) throw new Error(`Town title must name the town: ${town}`);
+const place = townPlaceBySlug(page.slug);
+if (!place) throw new Error(`Missing town photo ${town}`);
+const block = townBlockBySlug(page.slug);
+if (!block) throw new Error(`Missing town roofing block ${town}`);
+
+const path = `/locations/${page.slug}`;
+const graph = [
+  serviceNode(`Roofing in ${page.name}, SD`, 'Roofing contractor', path, [page.name]),
+  breadcrumb([
+    { name: 'Home', path: '/' },
+    { name: 'Service area', path: '/service-area' },
+    { name: page.name, path },
+  ]),
+  faqNode(faqItemsFor(block, SITE.phoneDisplay)),
+];
+---
+
+<Layout
+  title={page.documentTitle}
+  schemaName={`Roofing in ${page.name}, SD | ${SITE.name}`}
+  description={fillTokens(page.description, SITE.phoneDisplay)}
+  fullTitle
+  extraGraph={graph}
+  overlay
+>
+  <PageHero
+    photo={place.photo}
+    eyebrow={`${page.name}, South Dakota`}
+    title="Roofing Contractor in"
+    titleAfter={`${page.name}, SD`}
+    sub={page.sub}
+    town
+  />
+
+  <div class="page-split">
+    <div class="page-main">
+      <TownRoofing phone={SITE.phoneDisplay} place={place} mapQuery={page.mapQuery} preview={page.preview} block={block} />
+    </div>
+    <SideRail />
+  </div>
+
+  <CtaBand photo={place.photo} heading={`Need a roofer in ${page.name}?`} />
+</Layout>

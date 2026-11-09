@@ -1,0 +1,109 @@
+---
+import Layout from '../layouts/Layout.astro';
+import CtaBand from '../components/CtaBand.astro';
+import FaqAccordion from '../components/FaqAccordion.astro';
+import PageHero from '../components/PageHero.astro';
+import SideRail from '../components/SideRail.astro';
+import { joinNames, services, townPages } from '../config/catalog';
+import { UPDATED_ISO, UPDATED_LABEL } from '../content/updated';
+import { pagePhoto } from '../lib/photos';
+import { breadcrumb } from '../lib/page-schema';
+import { SITE } from '../config/site';
+
+const liveServices = services.filter((service) => service.live);
+const liveTowns = townPages.filter((town) => town.live && town.href !== '/');
+const hero = pagePhoto('hero-roofline', 'Illustration of a row of house rooflines at dusk');
+const faqs = [
+  {
+    q: 'How do I ask for help with my roof?',
+    a: `Call ${SITE.phoneDisplay} or use the contact page. Tell us your town and what you are seeing.`,
+  },
+  {
+    q: 'Which towns do you work in?',
+    a: `We work in ${joinNames(SITE.serviceTowns)}. We also take calls from ${joinNames(SITE.listOnlyTowns)}.`,
+  },
+  {
+    q: 'Can you tell me what my insurance will pay?',
+    a: 'No. Your insurance company decides what your policy covers. We can show you what we see on your roof and explain how a claim usually works.',
+  },
+];
+const graph = [
+  breadcrumb([
+    { name: 'Home', path: '/' },
+    { name: 'About', path: '/about' },
+  ]),
+];
+---
+
+<Layout
+  title="About Sioux Falls Roofing | Roofing Help in Sioux Falls, SD"
+  schemaName="About Sioux Falls Roofing"
+  description={`About ${SITE.name}: roof repair, new roofs, storm help, gutters, and siding in Sioux Falls and nearby towns. Call ${SITE.phoneDisplay}.`}
+  fullTitle
+  extraGraph={graph}
+  overlay
+>
+  <PageHero
+    photo={hero}
+    eyebrow={SITE.name}
+    title="About Sioux Falls Roofing"
+    sub="Roofing help for homeowners in Sioux Falls and the towns around it."
+  />
+
+  <div class="page-split">
+    <div class="page-main">
+      <section class="bg-paper">
+        <div class="section">
+          <p class="measure text-lg">
+            {SITE.name} helps homeowners in Sioux Falls and nearby towns with leaks, storm damage, worn out roofs, gutters, and siding.
+            We believe you should understand what is happening on top of your house before you spend a dollar on it.
+          </p>
+          <p class="mt-4 measure text-muted">
+            So we keep it simple. We tell you what we see, in everyday words, and we let you decide. The best way to reach us is {SITE.phoneDisplay}.
+          </p>
+          <p class="mt-6 text-sm text-muted">Updated <time datetime={UPDATED_ISO}>{UPDATED_LABEL}</time></p>
+        </div>
+      </section>
+
+      <section class="bg-white" aria-labelledby="work-heading">
+        <div class="section">
+          <div class="block-head">
+            <h2 id="work-heading">What this site covers</h2>
+            <p class="lede">Each name below opens its own page, so you can read about the work before you call.</p>
+          </div>
+          <ul class="card-grid cols-2">
+            {
+              liveServices.map((service) => (
+                <li>
+                  <a class="text-card" href={service.href}>
+                    {service.name}
+                    <span class="mt-2 block text-sm font-normal text-muted">{service.summary}</span>
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+      </section>
+
+      <section class="bg-paper" aria-labelledby="area-heading">
+        <div class="section">
+          <div class="block-head">
+            <h2 id="area-heading">Where the calls come from</h2>
+            <p class="lede">
+              Sioux Falls is home. {joinNames(liveTowns.map((town) => town.name))} are the other towns with pages.
+            </p>
+          </div>
+          <p>
+            <a class="text-link" href="/service-area">Read the service area page</a>
+          </p>
+        </div>
+      </section>
+
+      <FaqAccordion items={faqs} heading="A few common questions" />
+    </div>
+    <SideRail />
+  </div>
+
+  <CtaBand photo={hero} heading="Tell us about your roof" />
+</Layout>
