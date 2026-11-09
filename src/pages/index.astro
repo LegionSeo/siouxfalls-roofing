@@ -1,0 +1,394 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ContactLink from '../components/ContactLink.astro';
+import Icon from '../components/Icon.astro';
+import Photo from '../components/Photo.astro';
+import RequestPanel from '../components/RequestPanel.astro';
+import { joinNames, services, townPages } from '../config/catalog';
+import { SITE, mapsUrl } from '../config/site';
+import { homepageFaqs } from '../content/home';
+import { servicePageBySlug } from '../content/service-pages';
+import { pagePhoto } from '../lib/photos';
+import { faqNode } from '../lib/schema';
+
+const faqs = homepageFaqs();
+const homeTitle = 'Roofing Contractor in Sioux Falls, SD | Roof Repair and New Roofs';
+const homeSchemaName = 'Roofing Contractor in Sioux Falls, SD | Sioux Falls Roofing';
+const homeDescription = `Need a roofer in Sioux Falls? Roof repair, new roofs, hail damage help, gutters, and siding for Sioux Falls, Brandon, Harrisburg, Tea and nearby. Call ${SITE.phoneDisplay}.`;
+
+const featuredHrefs = [
+  '/services/roof-replacement',
+  '/services/roof-repair',
+  '/services/storm-hail-damage',
+  '/services/insurance-claim-help',
+  '/services/gutters',
+  '/services/siding',
+];
+
+const featured = featuredHrefs.map((href) => {
+  const service = services.find((item) => item.href === href);
+  const page = servicePageBySlug(href.replace('/services/', ''));
+  if (!service || !page) throw new Error(`Missing featured service ${href}`);
+  return { service, photo: pagePhoto(page.photo, page.alt) };
+});
+
+const moreServices = services.filter((service) => !featuredHrefs.includes(service.href));
+const repairPhoto = pagePhoto('service-roof-repair', 'Illustration of a hammer beside a patched section of shingles');
+const newRoofPhoto = pagePhoto('service-roof-replacement', 'Illustration of a roof half covered in new shingles');
+const cardSizes = '(min-width: 1024px) 360px, (min-width: 700px) 45vw, 100vw';
+const eyebrow = 'Sioux Falls & nearby towns';
+
+const areaMapSrc = 'https://maps.google.com/maps?ll=43.5460,-96.7313&z=8&t=m&hl=en&output=embed';
+
+const steps = [
+  {
+    title: 'Call and tell us what you see',
+    text: 'Tell us your town and what is going on with your roof. Photos from the ground are a big help.',
+  },
+  {
+    title: 'We take a close look',
+    text: 'We check the roof and the attic if we can get to it. Then we show you what we found.',
+  },
+  {
+    title: 'You decide what is next',
+    text: 'We explain your options in plain words. The choice is yours, and we start only after you say so.',
+  },
+];
+---
+
+<Layout title={homeTitle} schemaName={homeSchemaName} description={homeDescription} fullTitle extraGraph={[faqNode(faqs)]} overlay>
+  <link
+    slot="head"
+    rel="preload"
+    as="image"
+    href="/images/hero-area-1280.avif"
+    imagesrcset={SITE.heroPhoto.avifSrcset}
+    imagesizes="100vw"
+    type="image/avif"
+    fetchpriority="high"
+  />
+
+  <section class="hero hero-home surface-dark">
+    <div class="hero-media">
+      <Photo
+        photo={SITE.heroPhoto}
+        pictureClass="hero-picture"
+        sizes="100vw"
+        loading="eager"
+        fetchpriority="high"
+        class="hero-img"
+      />
+      <div class="hero-shade" aria-hidden="true"></div>
+    </div>
+    <div class="wrap hero-copy">
+      <p class="eyebrow eyebrow-on-dark">{eyebrow}</p>
+      <h1>
+        Roofing Contractor in<br />
+        Sioux Falls, SD
+      </h1>
+      <p class="hero-sub">
+        {SITE.name} helps homeowners with leaks, worn out roofs, and storm damage. Tell us what you are seeing, and we will help you figure out what to do next.
+      </p>
+      <div class="mt-8 flex flex-col gap-3 sm:flex-row">
+        <ContactLink track="call-hero" class="btn btn-accent w-full sm:w-auto" />
+        <a href="#quote" class="btn btn-line w-full sm:w-auto">
+          <Icon name="arrow" class="h-5 w-5" />
+          Request service
+        </a>
+      </div>
+      <ul class="mt-8 grid gap-4 sm:grid-cols-3">
+        <li class="flex items-start gap-3 text-sm font-semibold">
+          <Icon name="roof" class="mt-0.5 h-6 w-6 shrink-0 text-copper-bright" />
+          <span>Repairs and new roofs</span>
+        </li>
+        <li class="flex items-start gap-3 text-sm font-semibold">
+          <Icon name="hail" class="mt-0.5 h-6 w-6 shrink-0 text-copper-bright" />
+          <span>Storm and hail help</span>
+        </li>
+        <li class="flex items-start gap-3 text-sm font-semibold">
+          <Icon name="siding" class="mt-0.5 h-6 w-6 shrink-0 text-copper-bright" />
+          <span>Gutters and siding</span>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="bg-white" aria-label="Trust and quick answer">
+    <div class="wrap section">
+      <ul class="trust-grid">
+        <li>
+          <span class="icon-chip"><Icon name="phone" /></span>
+          <p class="mt-3 font-bold">Start with a call</p>
+          <p class="mt-1 text-sm text-muted">Tell us what you are seeing. If water is coming in, say so right away.</p>
+        </li>
+        <li>
+          <span class="icon-chip"><Icon name="check" /></span>
+          <p class="mt-3 font-bold">Plain answers</p>
+          <p class="mt-1 text-sm text-muted">We show you what we find and explain it in everyday words.</p>
+        </li>
+        <li>
+          <span class="icon-chip"><Icon name="clipboard" /></span>
+          <p class="mt-3 font-bold">Claim questions welcome</p>
+          <p class="mt-1 text-sm text-muted">We explain how a roof claim usually works. Your insurer makes the decision.</p>
+        </li>
+        <li>
+          <span class="icon-chip"><Icon name="pin" /></span>
+          <p class="mt-3 font-bold">{SITE.serviceTowns.length} towns with their own pages</p>
+          <p class="mt-1 text-sm text-muted">Sioux Falls and the towns around it. Open a town page to see the roof jobs we do there.</p>
+        </li>
+      </ul>
+      <div class="mt-12 max-w-[65ch]">
+        <p class="eyebrow">Quick answer</p>
+        <p>
+          {SITE.name} helps with roof repair, roof replacement, storm and hail damage, insurance claim questions, gutters, siding, and roof inspections in Sioux Falls and nearby towns. Call {SITE.phoneDisplay} and tell us what is going on.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section id="services" class="bg-paper" aria-labelledby="services-heading">
+    <div class="wrap section">
+      <div class="section-head">
+        <h2 id="services-heading">Roofing services in Sioux Falls</h2>
+        <p class="lede">
+          Pick the one that sounds like your roof. Not sure? Just call and describe it.
+        </p>
+      </div>
+      <h3 class="more-label">How we can help</h3>
+      <ul class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {
+          featured.map(({ service, photo }) => (
+            <li>
+              <a href={service.href} class="card">
+                <Photo photo={photo} sizes={cardSizes} loading="lazy" class="aspect-[4/3] w-full object-cover" />
+                <span class="flex flex-1 flex-col p-5">
+                  <h3>{service.name}</h3>
+                  <p class="mt-2 flex-1 text-sm leading-relaxed text-muted">{service.summary}</p>
+                  <span class="mt-4 text-sm font-semibold text-copper">Learn more →</span>
+                </span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+      <h3 class="more-label">Not sure what you need?</h3>
+      <ul class="more-grid">
+        {
+          moreServices.map((service) => {
+            const Tag = service.live ? 'a' : 'div';
+            return (
+              <li>
+                <Tag href={service.live ? service.href : undefined} class="more-row">
+                  <Icon name={service.icon} class="more-icon" />
+                  <span>
+                    <span class="more-title">{service.name}</span>
+                    <span class="more-line">{service.summary}</span>
+                    {service.live && <span class="more-go">Learn more</span>}
+                  </span>
+                </Tag>
+              </li>
+            );
+          })
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section class="bg-white" aria-labelledby="help-heading">
+    <div class="wrap section">
+      <div class="section-head">
+        <h2 id="help-heading">Fixing a problem or planning ahead?</h2>
+        <p class="lede">Either way, we start by finding out what your roof really needs.</p>
+      </div>
+      <div class="grid gap-6 md:grid-cols-2">
+        <a href="/services/roof-repair" class="split-panel">
+          <Photo photo={repairPhoto} pictureClass="hero-picture" sizes="(min-width: 768px) 50vw, 100vw" loading="lazy" class="hero-img" />
+          <span class="split-shade" aria-hidden="true"></span>
+          <span class="relative flex flex-1 flex-col justify-end p-8">
+            <h3 class="text-white">Something is wrong</h3>
+            <p class="mt-3 max-w-[36ch] on-dark-soft">A stain on the ceiling, shingles in the yard, or a storm that just came through. Let us take a look.</p>
+            <span class="btn btn-line mt-6 w-fit">See roof repair</span>
+          </span>
+        </a>
+        <a href="/services/roof-replacement" class="split-panel">
+          <Photo photo={newRoofPhoto} pictureClass="hero-picture" sizes="(min-width: 768px) 50vw, 100vw" loading="lazy" class="hero-img" />
+          <span class="split-shade" aria-hidden="true"></span>
+          <span class="relative flex flex-1 flex-col justify-end p-8">
+            <h3 class="text-white">Thinking about a new roof</h3>
+            <p class="mt-3 max-w-[36ch] on-dark-soft">Worn shingles or a roof that keeps needing patches. We will walk you through your options.</p>
+            <span class="btn btn-line mt-6 w-fit">See roof replacement</span>
+          </span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section id="how-it-works" class="surface-dark bg-ink text-white" aria-labelledby="process-heading">
+    <div class="wrap section">
+      <div class="section-head">
+        <h2 id="process-heading" class="text-white">How it works</h2>
+        <p class="lede on-dark">Three simple steps, and you stay in charge the whole way.</p>
+      </div>
+      <ol class="grid gap-8 md:grid-cols-3">
+        {
+          steps.map((step, index) => (
+            <li>
+              <span class="step-num">{index + 1}</span>
+              <h3 class="mt-4 text-white">{step.title}</h3>
+              <p class="mt-2 on-dark">{step.text}</p>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <section id="service-area" class="bg-white" aria-labelledby="area-heading">
+    <div class="wrap section">
+      <div class="section-head">
+        <h2 id="area-heading">Local roofing help in Sioux Falls and nearby towns</h2>
+        <div class="lede stack-md">
+          <p>
+            Older central Sioux Falls neighborhoods, including the Cathedral Historic District, often have steep roofs, chimneys, and more than one layer of shingles. Newer subdivisions to the south and east tend to need hail checks and a first full replacement. Wherever you live, hail and wind are part of life here.
+          </p>
+          <p>
+            Looking for a roofer outside the city? {joinNames(townPages.filter((town) => town.live && town.href !== '/').map((town) => town.name))} have their own pages.
+          </p>
+        </div>
+      </div>
+      <div class="area-grid">
+        <div class="area-map">
+          <div class="home-map-frame">
+            <iframe
+              class="home-map"
+              src={areaMapSrc}
+              title="Map of Sioux Falls, South Dakota and nearby towns"
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+              allowfullscreen
+              width="800"
+              height="600"
+            ></iframe>
+          </div>
+          <a class="home-map-link text-link" href={mapsUrl()} target="_blank" rel="noopener noreferrer">
+            Open in Google Maps
+          </a>
+        </div>
+        <ul class="area-towns">
+          {
+            townPages.map((town) =>
+              town.live ? (
+                <li>
+                  <a class="town-chip" href={town.href}>
+                    <Icon name="pin" class="h-4 w-4" />
+                    {town.name}
+                  </a>
+                </li>
+              ) : (
+                <li>
+                  <span class="town-chip">
+                    <Icon name="pin" class="h-4 w-4" />
+                    {town.name}
+                  </span>
+                </li>
+              ),
+            )
+          }
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="faq" class="bg-paper" aria-labelledby="faq-heading">
+    <div class="wrap section">
+      <div class="faq-col">
+      <div class="section-head">
+        <h2 id="faq-heading">Sioux Falls roofing questions</h2>
+        <p class="lede">Here are the questions we hear most. If yours is not here, just call.</p>
+      </div>
+      <div class="faq">
+        {
+          faqs.map((item) => (
+            <details>
+              <summary class="flex items-center justify-between gap-4">
+                <h3 class="text-lg">{item.question}</h3>
+                <span class="faq-plus text-2xl font-bold leading-none text-copper" aria-hidden="true">+</span>
+                <span class="faq-minus text-2xl font-bold leading-none text-copper" aria-hidden="true">−</span>
+              </summary>
+              {item.paragraphs.map((paragraph) => (
+                <p class="measure mt-3 text-muted">{paragraph}</p>
+              ))}
+            </details>
+          ))
+        }
+      </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="quote" class="surface-dark relative overflow-hidden bg-ink text-white">
+    <Photo
+      photo={SITE.heroPhoto}
+      pictureClass="hero-picture opacity-30"
+      sizes="100vw"
+      loading="lazy"
+      class="hero-img"
+    />
+    <div class="absolute inset-0 ink-shade" aria-hidden="true"></div>
+    <div class="wrap section relative">
+      <h2 class="max-w-[22ch] text-white">Have a roof question in Sioux Falls?</h2>
+      <p class="mt-4 max-w-[46ch] on-dark-soft">Tell us your town and what you are seeing. We would be glad to help.</p>
+      <div class="mt-12 flex flex-col gap-3 sm:flex-row sm:items-center">
+        <ContactLink track="call-quote" class="btn btn-accent w-full sm:w-auto" />
+        {
+          SITE.smsEnabled ? (
+            <ContactLink track="sms-quote" channel="sms" class="btn btn-line w-full sm:w-auto" label="Text" />
+          ) : (
+            <p class="on-dark-soft">
+              <span>Prefer to write?</span>
+              <a class="ml-1 font-semibold text-white underline" href={`mailto:${SITE.email}`} data-track="email-quote">
+                Email {SITE.email}
+              </a>
+            </p>
+          )
+        }
+      </div>
+      {
+        SITE.formEndpoint && (
+          <div class="mt-8 max-w-xl rounded-2xl bg-white p-6 text-text">
+            <RequestPanel
+              heading="Tell us about your roof"
+              headingTag="p"
+              intro="Share what you are seeing and how to reach you."
+              callTrack="call-quote-form"
+              smsTrack="sms-quote-form"
+              formIdPrefix="quote"
+            />
+          </div>
+        )
+      }
+    </div>
+  </section>
+
+  {
+    SITE.jobPhotos.length > 0 && (
+      <section class="wrap section" aria-label="Job photos">
+        <ul class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {SITE.jobPhotos.map((photo) => (
+            <li>
+              <img
+                src={photo.src}
+                alt={photo.alt}
+                width={photo.width}
+                height={photo.height}
+                class="h-auto w-full rounded-2xl"
+                loading="lazy"
+                decoding="async"
+              />
+            </li>
+          ))}
+        </ul>
+      </section>
+    )
+  }
+</Layout>
