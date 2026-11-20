@@ -1,0 +1,135 @@
+---
+import InlineText from './InlineText.astro';
+import MapEmbed from './MapEmbed.astro';
+import Photo from './Photo.astro';
+import { fillTokens, type TownBlock } from '../content/town-roofing';
+import type { TownPlace } from '../content/town-places';
+
+interface Props {
+  phone: string;
+  place: TownPlace;
+  mapQuery: string;
+  preview: string;
+  block: TownBlock;
+}
+
+const { phone, place, mapQuery, preview, block } = Astro.props;
+---
+
+<section class="bg-paper">
+  <div class="section">
+    <p class="measure text-lg">{fillTokens(block.answer, phone)}</p>
+  </div>
+</section>
+
+<section class="bg-white" aria-labelledby="work-heading">
+  <div class="section">
+    <div class="block-head">
+      <h2 id="work-heading">Common roof jobs in {block.name}</h2>
+      <p class="lede">{block.workIntro}</p>
+    </div>
+    <ul class="job-list">
+      {block.jobs.map((job) => <li><InlineText text={job} /></li>)}
+    </ul>
+    <div class="warn-block">
+      <h3>Warning signs to watch for</h3>
+      <p class="measure">{block.warningLead}</p>
+      <ul class="warn-list">
+        {block.warnings.map((item) => <li>{item}</li>)}
+      </ul>
+      <p class="measure warn-note">{block.warningNote}</p>
+    </div>
+  </div>
+</section>
+
+<section class="bg-paper" id="place-story" aria-labelledby="homes-heading">
+  <div class="section">
+    <div class="block-head">
+      <h2 id="homes-heading">{block.name} homes and what they mean for your roof</h2>
+    </div>
+    <figure class="place-card">
+      <div class="place-frame">
+        <Photo
+          photo={place.photo}
+          sizes="(min-width: 1024px) 720px, 100vw"
+          loading="lazy"
+          class="place-img"
+          pictureClass="place-picture"
+        />
+      </div>
+      <figcaption class="place-caption">
+        <span class="place-caption-title">{place.caption}</span>
+        <span class="place-credit">
+          Photo by {place.author}.
+          <a class="text-link" href={place.licenseUrl} rel="license">{place.license}</a>.
+          <a class="text-link" href={place.sourceUrl}>Wikimedia Commons</a>.
+          Resized.
+        </span>
+      </figcaption>
+    </figure>
+    <div class="place-copy housing-copy">
+      {block.housing.map((paragraph, index) => <p class:list={['measure', index > 0 && 'mt-4']}>{paragraph}</p>)}
+      <p class="source-note">
+        <a class="text-link" href={block.housingSourceHref} rel="noopener noreferrer">{block.housingSource}</a>
+      </p>
+    </div>
+  </div>
+</section>
+
+<section class="bg-white" aria-labelledby="tell-heading">
+  <div class="section">
+    <div class="block-head">
+      <h2 id="tell-heading">What to tell us when you call</h2>
+      <p class="lede">{block.tellUsLead}</p>
+    </div>
+    <ol class="card-grid cols-2">
+      {
+        block.tellUs.map((item, index) => (
+          <li class="num-card">
+            <span class="num">{index + 1}</span>
+            <span>{item}</span>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</section>
+
+<section class="bg-paper" aria-labelledby="town-faq-heading">
+  <div class="section">
+    <div class="block-head">
+      <h2 id="town-faq-heading">Roofing questions from {block.name} homeowners</h2>
+    </div>
+    <div class="town-faq">
+      {
+        block.faqs.map((item) => (
+          <article>
+            <h3>{item.q}</h3>
+            <p class="measure"><InlineText text={fillTokens(item.a, phone)} /></p>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<section class="bg-white" aria-labelledby="serving-heading">
+  <div class="section">
+    <div class="block-head">
+      <h2 id="serving-heading">Roofing help serving {block.name}</h2>
+    </div>
+    <p class="measure"><InlineText text={block.serving} /></p>
+    <div class="town-work mt-8">
+      <div>
+        <h3 id="map-heading">Map of {block.name}</h3>
+        <p class="lede">{block.mapNote}</p>
+        <MapEmbed
+          src={`https://www.google.com/maps?q=${encodeURIComponent(mapQuery)}&z=12&output=embed`}
+          title={`Map of ${block.name}, South Dakota`}
+          label={mapQuery}
+          preview={preview}
+        />
+      </div>
+    </div>
+  </div>
+</section>

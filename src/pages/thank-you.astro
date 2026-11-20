@@ -1,0 +1,26 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ContactLink from '../components/ContactLink.astro';
+import { SITE } from '../config/site';
+---
+
+<Layout
+  title={`Thank You | ${SITE.name}, Sioux Falls, SD`}
+  description={`Thanks for contacting ${SITE.name}. We got your note.`}
+  fullTitle
+  noindex
+>
+  <section class="bg-paper">
+    <div class="wrap section">
+      <p class="eyebrow">Note received</p>
+      <h1>Thanks, we got your note</h1>
+      <p class="measure mt-6 text-lg text-muted">
+        Someone on our team will reply using the details you shared. If your roof cannot wait, please call.
+      </p>
+      <div class="mt-8 flex flex-col gap-3 sm:flex-row">
+        <ContactLink track="call-thank-you" class="btn btn-accent w-full sm:w-auto" />
+        <a class="btn btn-line-dark w-full sm:w-auto" href="/">Back to home</a>
+      </div>
+    </div>
+  </section>
+</Layout>
