@@ -5,11 +5,12 @@
  *
  * Leave smsEnabled false until the number can receive texts.
  *
- * Photos are illustrations and credited town photos. Point the paths at real job
+ * Photos are credited Unsplash stock photos (src/lib/photos.ts) and credited town photos. Point the paths at real job
  * photos when those exist. Never show anyone as this company's crew unless they are.
  */
 
 import { PHONE, PHONE_E164, PHONE_HREF, PHONE_SMS_HREF } from './phone';
+import { stockPhoto } from '../lib/photos';
 
 export interface PostalAddress {
   city: string;
@@ -89,7 +90,7 @@ export interface SiteConfig {
    * The live value is FormSubmit. Mail is sent by formsubmit.co, not this site.
    */
   formEndpoint: string | null;
-  /** Palette id. Live tokens are Storm Slate and Copper. */
+  /** Palette id. Live tokens are Spruce and Brick. See DESIGN.md. */
   theme: string;
   /**
    * GA4 measurement id, such as G-ABC123. Empty loads no tag.
@@ -101,25 +102,6 @@ export interface SiteConfig {
    * When both ids are set, only GTM loads.
    */
   gtmId: string;
-}
-
-function photo(
-  base: string,
-  large: number,
-  small: number,
-  height: number,
-  alt: string,
-  note: string,
-): PhotoSlot {
-  return {
-    alt,
-    width: large,
-    height,
-    src: `/images/${base}-${large}.webp`,
-    webpSrcset: `/images/${base}-${small}.webp ${small}w, /images/${base}-${large}.webp ${large}w`,
-    avifSrcset: `/images/${base}-${small}.avif ${small}w, /images/${base}-${large}.avif ${large}w`,
-    note,
-  };
 }
 
 const SERVICE_EMAIL = 'service@siouxfalls-roofing.com';
@@ -152,24 +134,17 @@ export const SITE: SiteConfig = {
   ],
   listOnlyTowns: ['Crooks', 'Renner', 'Baltic'],
   sameAs: [],
-  // TODO: confirm this legal entity also operates this site, or set to ''.
-  operator: 'Midwest Leads LLC',
+  // Empty keeps the site brand neutral. Add the renter's legal name here if wanted.
+  operator: '',
   logo: '/logo-white.svg',
   logoLight: '/logo.svg',
   logoIcon: '/logo-icon.svg',
   logoText: 'Sioux Falls Roofing',
   ogImage: '/brand/og-image.jpg',
-  heroPhoto: photo(
-    'hero-area',
-    1280,
-    800,
-    720,
-    'Aerial view of rooftops in a neighborhood near Sioux Falls',
-    'Temporary hero. Replace hero-area files, or heroPhoto, with a real job photo.',
-  ),
+  heroPhoto: stockPhoto('hero'),
   jobPhotos: [],
   formEndpoint: `https://formsubmit.co/${SERVICE_EMAIL}`,
-  theme: 'storm-slate-copper',
+  theme: 'spruce-brick',
   ga4Id: '',
   gtmId: '',
 };

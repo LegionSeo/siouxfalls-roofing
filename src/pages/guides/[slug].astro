@@ -14,7 +14,7 @@ const { guide } = Astro.props;
 const bodies = import.meta.glob<{ Content: any }>('../../content/guides/*.md', { eager: true });
 const body = bodies[`../../content/guides/${guide.slug}.md`];
 const Content = body.Content;
-const ctaPhoto = pagePhoto('hero-roofline', 'Illustration of a row of house rooflines at dusk');
+const ctaPhoto = pagePhoto('storm');
 ---
 
 <Layout title={guide.title} description={guide.description} fullTitle>

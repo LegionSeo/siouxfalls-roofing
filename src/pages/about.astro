@@ -6,13 +6,13 @@ import PageHero from '../components/PageHero.astro';
 import SideRail from '../components/SideRail.astro';
 import { joinNames, services, townPages } from '../config/catalog';
 import { UPDATED_ISO, UPDATED_LABEL } from '../content/updated';
-import { pagePhoto } from '../lib/photos';
+import { pagePhoto, photoCredits } from '../lib/photos';
 import { breadcrumb } from '../lib/page-schema';
 import { SITE } from '../config/site';
 
 const liveServices = services.filter((service) => service.live);
 const liveTowns = townPages.filter((town) => town.live && town.href !== '/');
-const hero = pagePhoto('hero-roofline', 'Illustration of a row of house rooflines at dusk');
+const hero = pagePhoto('carrying');
 const faqs = [
   {
     q: 'How do I ask for help with my roof?',
@@ -97,6 +97,27 @@ const graph = [
           <p>
             <a class="text-link" href="/service-area">Read the service area page</a>
           </p>
+        </div>
+      </section>
+
+      <section class="bg-white" aria-labelledby="credits-heading">
+        <div class="section">
+          <div class="block-head">
+            <h2 id="credits-heading">Photo credits</h2>
+            <p class="lede">
+              The roofing photos on this site are stock photos from Unsplash, used under the Unsplash License. The people in them do not work for {SITE.name}. Town photos come from Wikimedia Commons, and each one is credited on its town page.
+            </p>
+          </div>
+          <ul class="credit-list">
+            {
+              photoCredits.map((credit) => (
+                <li>
+                  <a class="text-link" href={credit.page} target="_blank" rel="noopener">{credit.alt}</a>
+                  <span class="text-muted"> by {credit.photographer}</span>
+                </li>
+              ))
+            }
+          </ul>
         </div>
       </section>
 

@@ -1,7 +1,7 @@
 ---
 import Photo from './Photo.astro';
 import { servicePageBySlug } from '../content/service-pages';
-import { pagePhoto } from '../lib/photos';
+import { stockPhoto } from '../lib/photos';
 import type { ServiceItem } from '../config/catalog';
 
 interface Props {
@@ -12,7 +12,7 @@ const { services } = Astro.props;
 const cards = services.map((service) => {
   const page = servicePageBySlug(service.href.replace('/services/', ''));
   if (!page) throw new Error(`Missing photo for ${service.href}`);
-  return { service, photo: pagePhoto(page.photo, page.alt) };
+  return { service, photo: stockPhoto(page.photo, 4 / 3) };
 });
 ---
 

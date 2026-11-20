@@ -1,3 +1,5 @@
+import type { StockKey } from '../lib/photos';
+
 export interface ServicePage {
   slug: string;
   /** Visible H1. */
@@ -10,8 +12,8 @@ export interface ServicePage {
   ctaName: string;
   sub: string;
   description: string;
-  photo: string;
-  alt: string;
+  /** Key in src/lib/photos.ts. */
+  photo: StockKey;
   answer: string;
   includedHeading: string;
   includedLead: string;
@@ -43,6 +45,9 @@ const insurance = '/services/insurance-claim-help';
 const gutters = '/services/gutters';
 const siding = '/services/siding';
 const inspections = '/services/roof-inspections';
+const shingle = '/services/shingle-roofs';
+const metal = '/services/metal-roofs';
+const tarping = '/services/emergency-tarping';
 
 export const servicePages: ServicePage[] = [
   {
@@ -54,8 +59,7 @@ export const servicePages: ServicePage[] = [
     sub: 'When patching stops making sense, we help you plan a new roof from the deck up.',
     description:
       'Thinking about a new roof in Sioux Falls? See what a roof replacement includes, the signs it is time, and what changes the price. Call {phone}.',
-    photo: 'service-roof-replacement',
-    alt: 'Illustration of a roof half covered in new shingles with a ladder and shingle bundles',
+    photo: 'replacement',
     answer:
       'A roof replacement in Sioux Falls means taking the old roof off, checking the wood deck underneath, and building a new roof system on top. It makes sense when the shingles are worn out or the damage is too spread out to patch. Call {phone} and tell us about your house. We will talk it through with you.',
     includedHeading: 'What a roof replacement includes',
@@ -93,7 +97,7 @@ export const servicePages: ServicePage[] = [
     faqs: [
       {
         q: 'How long does a roof last in Sioux Falls?',
-        a: 'It depends on the material, the attic airflow, and the weather your roof has seen. Many asphalt shingle roofs last somewhere around 15 to 30 years. Hail can shorten that by a lot. If you are not sure where yours stands, a [roof inspection](/services/roof-inspections) is a good first step.',
+        a: 'It depends on the material, the attic airflow, and the weather your roof has seen. Hail can shorten the life of a roof by a lot. If you are not sure where yours stands, a [roof inspection](/services/roof-inspections) is a good first step.',
       },
       {
         q: 'Can you put new shingles over my old ones?',
@@ -105,7 +109,7 @@ export const servicePages: ServicePage[] = [
       },
       {
         q: 'Do I need a permit to replace my roof?',
-        a: 'Many cities ask for one, and the rules can change. It is a good idea to check with your city before work starts. Tell us your town and we will talk through what applies to your job.',
+        a: 'In the City of Sioux Falls, yes. The city says putting on new shingles needs a building permit, and it licenses the contractors who do residential roofing. Towns outside the city set their own rules, so check with your town. Tell us where you live and we will talk through what applies.',
       },
       {
         q: 'Can you replace a roof in the winter?',
@@ -123,8 +127,7 @@ export const servicePages: ServicePage[] = [
     sub: 'Leaks, missing shingles, and worn flashing. We find the source and fix that spot.',
     description:
       'Roof repair in Sioux Falls for leaks, missing shingles, and worn flashing. Learn the warning signs and when a repair makes sense. Call {phone}.',
-    photo: 'service-roof-repair',
-    alt: 'Illustration of a hammer resting beside a patched section of shingles',
+    photo: 'repair',
     answer:
       'Roof repair in Sioux Falls usually means fixing a leak, replacing a few shingles, or resealing flashing around a chimney, vent, or wall. Water often travels before it shows up on your ceiling, so the first job is finding where it really gets in. Call {phone} and tell us where you see the problem.',
     includedHeading: 'Roof repairs we help with',
@@ -200,8 +203,7 @@ export const servicePages: ServicePage[] = [
     sub: 'Hail marks are hard to see from the ground. We take a close look and show you what is there.',
     description:
       'Had hail or high wind in Sioux Falls? Learn what storm damage looks like, what to do first, and how we can help with your roof. Call {phone}.',
-    photo: 'service-storm-hail',
-    alt: 'Illustration of hail falling from dark clouds onto a shingled roof',
+    photo: 'storm',
     answer:
       'After hail or high wind in Sioux Falls, your roof can be damaged even when it looks fine from the yard. Hail knocks the protective granules off shingles. Wind can lift them and break the seal. Take photos, stay off the roof, and call {phone}. We will look it over and tell you plainly what we see.',
     includedHeading: 'What we look at after a storm',
@@ -269,8 +271,7 @@ export const servicePages: ServicePage[] = [
     sub: 'A plain look at how a roof claim usually works, and where we can help along the way.',
     description:
       'Filing a roof claim in Sioux Falls? Here is how the process usually works, what to document, and how we can help. Your insurer decides coverage. Call {phone}.',
-    photo: 'service-insurance-claim',
-    alt: 'Illustration of a clipboard with a checklist next to a small house',
+    photo: 'house',
     answer:
       'A roof insurance claim in Sioux Falls usually starts with you reporting the damage to your insurer. An adjuster reviews it, and your insurer decides what your policy covers. We can show you the damage, give you photos and notes, and explain the steps. We cannot promise an outcome, and we do not speak for your insurance company. Call {phone} with your questions.',
     includedHeading: 'How we can help with your claim',
@@ -354,8 +355,7 @@ export const servicePages: ServicePage[] = [
     sub: 'Gutters and downspouts that move water off your roof and away from your foundation.',
     description:
       'Gutter repair and new gutters in Sioux Falls. Learn the signs of failing gutters and what changes the price. Call {phone} to talk about your home.',
-    photo: 'service-gutters',
-    alt: 'Illustration of a gutter along a roof edge with water running to a downspout',
+    photo: 'gutters',
     answer:
       'Gutters in Sioux Falls do a hard job. They carry spring melt and summer downpours off your roof and away from your foundation. When they sag, leak, or overflow, water ends up where you do not want it. We help with new gutters, downspouts, and repairs. Call {phone} and tell us what you are seeing.',
     includedHeading: 'Gutter work we help with',
@@ -423,8 +423,7 @@ export const servicePages: ServicePage[] = [
     sub: 'Repairs and new siding for hail dents, cracks, and wind damage.',
     description:
       'Siding repair and replacement in Sioux Falls for hail dents, cracks, and wind damage. See the warning signs and what changes the price. Call {phone}.',
-    photo: 'service-siding',
-    alt: 'Illustration of lap siding on a house wall around a window',
+    photo: 'siding',
     answer:
       'Siding in Sioux Falls takes a beating from hail, wind, and big swings in temperature. When it cracks, loosens, or gets dented, water can work its way behind it. We help with siding repairs and full replacement, and we tie it in cleanly around your windows and trim. Call {phone} and tell us what is going on.',
     includedHeading: 'Siding work we help with',
@@ -492,8 +491,7 @@ export const servicePages: ServicePage[] = [
     sub: 'A careful look at your roof, and a plain explanation of what we saw.',
     description:
       'Roof inspections in Sioux Falls for homeowners, buyers, and anyone after a storm. See what we check and what we will tell you. Call {phone}.',
-    photo: 'service-roof-inspection',
-    alt: 'Illustration of a magnifying glass over roof shingles',
+    photo: 'inspection',
     answer:
       'A roof inspection in Sioux Falls tells you what shape your roof is really in. We look at the shingles, flashing, vents, and attic, then explain what we saw in plain words. It is a good idea after a storm, before you buy a home, or when your roof is getting older. Call {phone} to talk about yours.',
     includedHeading: 'What we check',
@@ -550,6 +548,213 @@ export const servicePages: ServicePage[] = [
       },
     ],
     related: [repair, replacement, storm],
+  },
+  {
+    slug: 'shingle-roofs',
+    title: 'Shingle Roofs in Sioux Falls, SD',
+    documentTitle: 'Asphalt Shingle Roofs in Sioux Falls, SD | Install and Repair',
+    serviceType: 'Asphalt shingle roof installation and repair',
+    ctaName: 'a shingle roof',
+    sub: 'Most homes around Sioux Falls have asphalt shingles. We help you pick the right ones and put them on right.',
+    description:
+      'Asphalt shingle roofs in Sioux Falls. Compare shingle types, see what goes under them, and learn what changes the price. Call {phone}.',
+    photo: 'shingles',
+    answer:
+      'An asphalt shingle roof is the most common kind of roof on houses around Sioux Falls. Good shingles only work as well as the layers under them, so we look at the whole system. Call {phone} and tell us about your house. We will help you sort out which shingle fits it.',
+    includedHeading: 'What a shingle roof job includes',
+    includedLead: 'The shingles are the part you see. The parts you do not see decide how long the roof keeps water out.',
+    included: [
+      'Taking off the old shingles and checking the wood deck for soft spots.',
+      'Underlayment over the deck, plus ice and water barrier along the eaves and in the valleys.',
+      'Drip edge along the roof edges so water runs into the gutter, not behind it.',
+      'Starter strips and ridge caps made to go with the shingle you pick.',
+      'New flashing at chimneys, walls, and pipes where the old metal is worn.',
+      'Ridge or roof vents so the attic can breathe.',
+    ],
+    signsHeading: 'Signs your shingles are wearing out',
+    signsLead: 'Shingles wear a little every year. These are the clues that they are near the end.',
+    signs: [
+      'Edges are curling up or the middle of each shingle is cupping.',
+      'Dark bald spots where the grit has worn off.',
+      'Lots of shingle grit in the gutters or at the bottom of downspouts.',
+      'Cracked, torn, or missing shingles after wind.',
+      'Dents or bruises after hail, often easier to see on vents and gutters first.',
+    ],
+    compare: {
+      heading: 'Common shingle choices',
+      lead: 'Each maker has its own product names. These are the main groups you will hear about.',
+      rows: [
+        { title: 'Three tab shingles', text: 'Flat, single layer shingles with an even pattern. They cost less up front, and fewer homes use them today.' },
+        { title: 'Architectural shingles', text: 'Thicker, layered shingles with more depth. This is what most new shingle roofs use now.' },
+        { title: 'Impact rated shingles', text: 'Built and tested to hold up better to hail. The top rating is Class 4. Some insurers give a discount for them, so ask your agent.' },
+      ],
+    },
+    costHeading: 'What affects the price of a shingle roof',
+    costLead: 'We do not post a set price, because no two roofs are the same. These are the things that move it.',
+    cost: [
+      'The size of the roof and how steep it is.',
+      'The shingle you choose. Impact rated and designer lines cost more than standard ones.',
+      'How many old layers come off, and how much deck needs new wood.',
+      'Valleys, dormers, skylights, and chimneys, which all take extra detail work.',
+    ],
+    urgentHeading: 'If shingles blew off in a storm',
+    urgent:
+      'Pick up loose shingles in the yard and take photos of the roof from the ground. Please stay off the roof. If water is coming in, see our page on [emergency tarping](/services/emergency-tarping), then call {phone}.',
+    visit:
+      'Call and tell us how old the roof is, if you know. Mention any leaks or storm damage. We look at the shingles, the flashing, and the attic. Then we show you what we found and go over shingle options. If you decide to go ahead, we set a date and walk you through the work. When we finish, we clean up and look over the job with you.',
+    faqs: [
+      {
+        q: 'Are impact rated shingles worth it in Sioux Falls?',
+        a: 'Hail storms do hit this part of South Dakota, so many people here think about them. They cost more up front. Some insurers lower your premium for a Class 4 roof, so call your agent before you decide.',
+      },
+      {
+        q: 'Can I pick any shingle color?',
+        a: 'Yes, within the line you choose. Darker colors hide wear well, and lighter colors can keep the attic a bit cooler. Some neighborhoods have rules, so check with your HOA if you have one.',
+      },
+      {
+        q: 'Do I need a permit for new shingles in Sioux Falls?',
+        a: 'Yes. The City of Sioux Falls says putting on new shingles needs a building permit. Other towns set their own rules, so check with yours if you live outside the city.',
+      },
+      {
+        q: 'Can new shingles go over the old ones?',
+        a: 'Sometimes, but we usually suggest a full tear off. It lets us check the deck and fix problems before they get covered up.',
+      },
+    ],
+    related: [replacement, storm, metal],
+  },
+  {
+    slug: 'metal-roofs',
+    title: 'Metal Roofs in Sioux Falls, SD',
+    documentTitle: 'Metal Roofing in Sioux Falls, SD | Panels and Repairs',
+    serviceType: 'Residential metal roof installation and repair',
+    ctaName: 'a metal roof',
+    sub: 'Thinking about metal? We explain the types, the tradeoffs, and whether it fits your house.',
+    description:
+      'Metal roofs in Sioux Falls. Learn the difference between standing seam and exposed fastener panels, what to watch for, and what changes the price. Call {phone}.',
+    photo: 'metal',
+    answer:
+      'A metal roof uses steel or aluminum panels in place of shingles. It can be a good fit for houses, garages, and outbuildings around Sioux Falls. It also costs more up front than shingles. Call {phone} and we will talk through whether metal makes sense for you.',
+    includedHeading: 'What a metal roof job includes',
+    includedLead: 'Metal needs careful detail work at every edge and seam. This is what goes into it.',
+    included: [
+      'Checking the roof deck and the framing before anything goes on.',
+      'Underlayment under the panels, plus ice and water barrier where it is needed.',
+      'Panels cut and set to fit your roof, with trim at the eaves, rakes, and ridge.',
+      'Flashing at chimneys, walls, vents, and pipes.',
+      'Snow guards over doors and walkways if you want them, so snow does not slide off all at once.',
+      'Repairs on existing metal roofs, like loose fasteners, worn seals, and bent trim.',
+    ],
+    signsHeading: 'Signs a metal roof needs attention',
+    signsLead: 'Metal roofs need less care than shingles, but they still need some. Watch for these.',
+    signs: [
+      'Screws that are backing out or rubber washers that look cracked.',
+      'Rust spots, mostly near fasteners, cut edges, and seams.',
+      'Leaks around vents, pipes, or chimneys.',
+      'Panels or trim that have lifted or bent after wind.',
+      'Dents after hail. Some are only cosmetic, and some open seams.',
+    ],
+    compare: {
+      heading: 'Standing seam or exposed fastener',
+      lead: 'These are the two main types of metal roof on houses and buildings.',
+      rows: [
+        { title: 'Standing seam', text: 'Panels lock together with raised seams, and the screws are hidden. It costs more and has fewer places for water to get in.' },
+        { title: 'Exposed fastener', text: 'Panels are screwed down through the face. It costs less, but the screws and washers need checking over the years.' },
+      ],
+    },
+    costHeading: 'What affects the price of a metal roof',
+    costLead: 'Metal is priced by the job, not by a set number. These are the things that change it.',
+    cost: [
+      'The panel type. Standing seam usually costs more than exposed fastener panels.',
+      'The metal, its thickness, and the finish or color.',
+      'How big and how steep the roof is, and how many valleys and cutouts it has.',
+      'Whether the old roof comes off first, and the shape of the deck under it.',
+    ],
+    urgentHeading: 'If your metal roof is leaking',
+    urgent:
+      'Catch the water inside and move what you can. Metal is slick, so please do not climb up, above all when it is wet or icy. Take photos from the ground and call {phone}.',
+    visit:
+      'Call and tell us what kind of roof you have now. Let us know if it is a house, a garage, or another building. We look at the roof, the deck, and how the water runs off. Then we explain your options and what each one means for you. If you go ahead, we go over panel type, color, and scheduling with you. When the job is done, we look it over together.',
+    faqs: [
+      {
+        q: 'Is a metal roof loud in the rain?',
+        a: 'Over a solid deck with underlayment and an insulated attic, most people say it is not much louder than shingles. Metal over open framing, like on a shed, is louder.',
+      },
+      {
+        q: 'Will hail dent a metal roof?',
+        a: 'Large hail can dent metal. Thicker panels hold up better. Some dents are only about looks and some damage seams, so it is worth a check after a big storm.',
+      },
+      {
+        q: 'Can metal go over my old shingles?',
+        a: 'In some cases, yes. It depends on the deck, the number of layers, and local rules. We will look first and tell you what makes sense.',
+      },
+      {
+        q: 'Do you fix metal roofs on garages and outbuildings?',
+        a: 'Tell us about the building when you call. We will let you know if it is a job we can help with.',
+      },
+    ],
+    related: [replacement, shingle, inspections],
+  },
+  {
+    slug: 'emergency-tarping',
+    title: 'Emergency Roof Tarping in Sioux Falls, SD',
+    documentTitle: 'Emergency Roof Tarping in Sioux Falls, SD | Storm Leaks',
+    serviceType: 'Temporary roof tarp and leak protection',
+    ctaName: 'an emergency tarp',
+    sub: 'A storm opened up your roof and water is getting in. A tarp can buy you time until the real fix.',
+    description:
+      'Emergency roof tarping in Sioux Falls after storm, wind, or tree damage. What to do right now, what a tarp does, and what comes next. Call {phone}.',
+    photo: 'tarping',
+    answer:
+      'Emergency tarping means covering a damaged part of your roof to keep more water out until it can be repaired. It is a short term fix, not a new roof. If water is coming in right now, call {phone} and tell us your town and what happened. We will tell you honestly what we can do and when.',
+    includedHeading: 'What emergency tarping includes',
+    includedLead: 'The goal is simple. Stop more water from getting in, and keep the damage from spreading.',
+    included: [
+      'A look at the damage, from the ground first and then up close if it is safe.',
+      'A heavy tarp stretched over the damaged area and past the ridge when needed.',
+      'Boards or strapping to hold the tarp down against wind.',
+      'Photos of the damage before and after the tarp goes on, for your records.',
+      'A plan for the real repair or replacement once things calm down.',
+    ],
+    signsHeading: 'When you may need a tarp',
+    signsLead: 'Any of these after a storm means the roof is open to the weather.',
+    signs: [
+      'Water dripping through a ceiling or light fixture during or after rain.',
+      'A tree or large limb has hit the roof.',
+      'Wind tore off shingles and you can see bare wood or felt.',
+      'A hole, crack, or gap where flashing or a vent blew loose.',
+    ],
+    costHeading: 'What affects the cost of a tarp',
+    costLead: 'Tarping is priced by the job. These are the things that change it.',
+    cost: [
+      'How big the damaged area is.',
+      'How steep and how high the roof is.',
+      'Whether there is a tree or debris to clear first.',
+      'The weather and the time of day the work has to happen.',
+    ],
+    urgentHeading: 'What to do right now',
+    urgent:
+      'Put buckets under drips and move furniture and electronics away. If water is near lights or outlets, turn off power to that area at the breaker if you can do it safely. Please stay off the roof. Take photos for your insurer, then call {phone}.',
+    visit:
+      'Call and tell us your town and where the water is coming in. If a tree is on the house, tell us that too. We check the damage and decide if it is safe to go up. Then we cover the open area and fasten the tarp down. After that, we talk with you about the repair and any insurance questions.',
+    faqs: [
+      {
+        q: 'Will my insurance pay for a tarp?',
+        a: 'It depends on your policy. Many policies ask you to take reasonable steps to stop more damage after a storm. Call your insurer or agent and keep receipts and photos. Our [insurance claim help](/services/insurance-claim-help) page explains how a roof claim usually goes.',
+      },
+      {
+        q: 'How long can a tarp stay on?',
+        a: 'A tarp is meant to be short term. Sun and wind wear it down. Plan the real repair as soon as you can.',
+      },
+      {
+        q: 'Should I put up a tarp myself?',
+        a: 'We do not suggest it. Roofs are slick and dangerous after a storm, and a loose tarp can blow off. Stay inside, catch the water, and call for help.',
+      },
+      {
+        q: 'Can you come right away?',
+        a: 'After a big storm many people call at once. We cannot promise a time, but we will tell you honestly when we can get there.',
+      },
+    ],
+    related: [repair, storm, insurance],
   },
 ];
 

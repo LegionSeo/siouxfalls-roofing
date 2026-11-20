@@ -52,7 +52,8 @@ export const homeFaqs: FaqItem[] = [
   {
     question: 'Do I need a permit for a new roof in Sioux Falls?',
     paragraphs: [
-      'Many cities ask for one, and rules can change. It is a good idea to confirm with the city before work starts. Tell us your town and we will talk through what applies to your job.',
+      'Yes. The City of Sioux Falls says putting on new shingles or new siding needs a building permit. The city also requires a residential roofing contractor license for shingle and siding work, so it is fair to ask any roofer about theirs.',
+      'Gutter and fascia work does not need a city permit. If you live outside Sioux Falls, your own town or county sets the rules.',
     ],
   },
   {

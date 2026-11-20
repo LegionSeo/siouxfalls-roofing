@@ -11,7 +11,7 @@ const { src, title, label, preview, class: className } = Astro.props;
 const sketched = Astro.slots.has('default');
 ---
 
-<div class:list={['map-embed relative overflow-hidden rounded-2xl', className]} data-map>
+<div class:list={['map-embed relative overflow-hidden rounded-md', className]} data-map>
   {
     sketched ? (
       <div class="map-stage">

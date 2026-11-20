@@ -41,6 +41,18 @@ const serviceList: Omit<ServiceItem, 'live'>[] = [
     summary: 'Filing a roof claim can feel confusing. We explain the steps and give you clear photos and notes. Your insurer makes the decision.',
   },
   {
+    name: 'Shingle roofs',
+    href: '/services/shingle-roofs',
+    icon: 'shingle',
+    summary: 'Asphalt shingle roofs put on right, from the deck up. We help you compare standard and impact rated shingles.',
+  },
+  {
+    name: 'Metal roofs',
+    href: '/services/metal-roofs',
+    icon: 'metal',
+    summary: 'Standing seam and exposed fastener metal roofs, plus repairs on the metal roof you already have.',
+  },
+  {
     name: 'Gutters',
     href: '/services/gutters',
     icon: 'gutter',
@@ -57,6 +69,12 @@ const serviceList: Omit<ServiceItem, 'live'>[] = [
     href: '/services/roof-inspections',
     icon: 'search',
     summary: 'A careful look at your shingles, flashing, vents, and attic. You get a plain report on what we saw.',
+  },
+  {
+    name: 'Emergency tarping',
+    href: '/services/emergency-tarping',
+    icon: 'tarp',
+    summary: 'Storm opened up the roof? A tarp keeps more water out until the real repair can happen.',
   },
 ];
 
