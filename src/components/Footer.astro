@@ -9,7 +9,7 @@ const liveTowns = townPages.filter((town) => town.live);
 const plainTowns = townPages.filter((town) => !town.live).map((town) => town.name);
 ---
 
-<footer class="surface-dark bg-ink text-white">
+<footer class="surface-dark site-footer text-white">
   <div class="wrap section grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
     <div>
       <a href="/" class="brand">
@@ -72,10 +72,10 @@ const plainTowns = townPages.filter((town) => !town.live).map((town) => town.nam
       </ul>
       {plainTowns.length > 0 && <p class="mt-4 text-sm leading-relaxed on-dark">Also serving {plainTowns.join(', ')}.</p>}
       <p class="mt-4">
-        <a href="/service-area" class="on-dark hover:text-white hover:underline">Service area</a>
+        <a href="/service-area" class="text-sm on-dark hover:text-white hover:underline">Service area</a>
       </p>
       <p class="mt-2">
-        <a href="/guides" class="on-dark hover:text-white hover:underline">Guides</a>
+        <a href="/guides" class="text-sm on-dark hover:text-white hover:underline">Guides</a>
       </p>
     </div>
 

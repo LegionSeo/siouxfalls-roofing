@@ -21,7 +21,7 @@ export interface StockPhoto {
 export const STOCK = {
   hero: {
     id: 'photo-1635424824849-1b09bdcc55b1',
-    alt: 'Roofer with a drill and a safety rope working on an asphalt shingle roof',
+    alt: 'Roofer in a safety vest and harness using a nail gun on an asphalt shingle roof',
     photographer: 'Raze Solar',
     page: 'https://unsplash.com/photos/Scaj0T40nFI',
   },
@@ -39,13 +39,14 @@ export const STOCK = {
   },
   tarping: {
     id: 'photo-1786295866839-d17f879c65cd',
-    alt: 'Worker in a blue shirt taping plastic on a house roof',
+    alt: 'Worker in a blue shirt on a porch roof by a window, with a ladder below',
     photographer: 'Matt Adams',
     page: 'https://unsplash.com/photos/Rh1FunvzXVM',
   },
   metal: {
     id: 'photo-1780445392484-5fb7d5610708',
-    alt: 'Standing seam metal roof panels',
+    alt: 'Hands using a tool on metal roof trim',
+    crop: 'bottom',
     photographer: 'Sergio Martins',
     page: 'https://unsplash.com/photos/E07VvBCSSNE',
   },
@@ -57,13 +58,13 @@ export const STOCK = {
   },
   repair: {
     id: 'photo-1782274951165-b88199bde548',
-    alt: 'Worn asphalt shingle roof with missing and damaged shingles',
+    alt: 'Gray shingle roof with a patch of missing shingles',
     photographer: 'blue soda',
     page: 'https://unsplash.com/photos/jUiyOUQMHeE',
   },
   gutters: {
     id: 'photo-1634853982486-c06f0e17940f',
-    alt: 'Metal gutter along the edge of a shingle roof',
+    alt: 'Rain dripping off the edge of a wet shingle roof',
     photographer: 'Luke Southern',
     page: 'https://unsplash.com/photos/ZzZouwiQWV0',
   },
@@ -75,7 +76,7 @@ export const STOCK = {
   },
   inspection: {
     id: 'photo-1632759145351-1d592919f522',
-    alt: 'Roofer standing on a shingle roof',
+    alt: 'Roofer in a red shirt standing on a house roof next to a ladder',
     photographer: 'Zohair Mirza',
     page: 'https://unsplash.com/photos/-1l0iZaM8ms',
   },

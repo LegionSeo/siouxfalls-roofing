@@ -12,9 +12,9 @@ import { stockPhoto } from '../lib/photos';
 import { faqNode } from '../lib/schema';
 
 const faqs = homepageFaqs();
-const homeTitle = 'Roofing in Sioux Falls, SD | Roofers for Repairs, New Roofs and Hail';
+const homeTitle = 'Roofing Sioux Falls, SD | Roofers for Repair, Hail and New Roofs';
 const homeSchemaName = 'Roofing in Sioux Falls, SD | Sioux Falls Roofing';
-const homeDescription = `Looking for roofers in Sioux Falls? Roof repair, new shingle and metal roofs, hail damage and insurance claim help for Sioux Falls, Brandon, Harrisburg, Tea and nearby. Call ${SITE.phoneDisplay}.`;
+const homeDescription = `Need roofers in Sioux Falls? Roof repair, new roofs, hail damage and claim help in Sioux Falls and nearby towns. Call ${SITE.phoneDisplay}.`;
 
 const serviceRows = services
   .filter((service) => service.live)
@@ -24,8 +24,8 @@ const serviceRows = services
     return { service, photo: stockPhoto(page.photo, 4 / 3) };
   });
 
-const repairPhoto = stockPhoto('repair', 3 / 2);
-const newRoofPhoto = stockPhoto('replacement', 3 / 2);
+const repairPhoto = stockPhoto('repair', 16 / 10);
+const newRoofPhoto = stockPhoto('replacement', 16 / 10);
 const localPhoto = stockPhoto('aerial', 4 / 3);
 
 const areaMapSrc = 'https://maps.google.com/maps?ll=43.5460,-96.7313&z=9&t=m&hl=en&output=embed';
@@ -100,7 +100,7 @@ const steps = [
     <div class="wrap storm-strip-inner">
       <span class="storm-icon"><Icon name="bolt" class="h-6 w-6" /></span>
       <p>
-        <strong>Water coming in after a storm?</strong>
+        <strong>Water coming in after a storm?</strong>{' '}
         Catch the drips, stay off the roof, and call. A tarp can keep more water out until the repair.
       </p>
       <a class="storm-link" href="/services/emergency-tarping">Emergency tarping <Icon name="arrow" class="h-4 w-4" /></a>
@@ -116,7 +116,7 @@ const steps = [
           {SITE.name} helps homeowners in Sioux Falls and nearby towns with roof repair, roof replacement, storm and hail damage, insurance claim questions, shingle and metal roofs, gutters, siding, and roof inspections.
         </p>
         <p class="lede">Not sure which one fits? Call and describe what you see. We will sort it out with you.</p>
-        <ContactLink track="call-services" class="btn btn-accent mt-6 w-full sm:w-auto" />
+        <ContactLink track="call-services" class="btn btn-accent mt-6 hidden lg:inline-flex" />
       </div>
       <ul class="svc-rows">
         {
@@ -182,11 +182,11 @@ const steps = [
           <p class="fact-title"><Icon name="clipboard" class="h-5 w-5" />Good to know in Sioux Falls</p>
           <ul>
             <li>
-              The city says putting on new shingles or new siding needs a building permit.
+              The city says putting on new shingles or new siding needs a building permit.{' '}
               <a class="text-link" href={permitSource} target="_blank" rel="noopener">City permit FAQ</a>
             </li>
             <li>
-              The city licenses contractors who do residential roofing and siding. It is fair to ask any roofer about theirs.
+              The city licenses contractors who do residential roofing and siding. It is fair to ask any roofer about theirs.{' '}
               <a class="text-link" href={licenseSource} target="_blank" rel="noopener">City license page</a>
             </li>
           </ul>
@@ -304,10 +304,6 @@ const steps = [
         <div class="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
           <ContactLink track="call-quote" class="btn btn-accent w-full sm:w-auto" />
         </div>
-        <p class="mt-6 on-dark-soft">
-          Prefer to write?
-          <a class="ml-1 font-semibold text-white underline" href={`mailto:${SITE.email}`} data-track="email-quote">Email {SITE.email}</a>
-        </p>
       </div>
       {
         SITE.formEndpoint && (

@@ -2128,15 +2128,9 @@ h3 {
     box-shadow: 0 24px 48px rgb(0 0 0 / 0.28);
   }
 
-  .hero-panel::before {
-    content: "";
-    position: absolute;
-    left: -6px;
-    top: -26px;
-    width: 120px;
-    height: 26px;
-    background: #b4441f;
-    clip-path: polygon(0 100%, 50% 0, 100% 100%, 86% 100%, 50% 30%, 14% 100%);
+  /* The worker stands on the left of this photo. Flip it on wide screens so the panel does not cover him. */
+  .hero-home .hero-img {
+    transform: scaleX(-1);
   }
 
   .hero-home .hero-panel {
@@ -2286,14 +2280,11 @@ h3 {
 }
 
 .svc-line {
-  display: -webkit-box;
+  display: block;
   margin-top: 4px;
-  overflow: hidden;
   color: #4f5a54;
   font-size: 0.9375rem;
   line-height: 1.45;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
 }
 
 .svc-go {
@@ -2346,7 +2337,7 @@ h3 {
 .choice-img {
   display: block;
   width: 100%;
-  aspect-ratio: 3 / 2;
+  aspect-ratio: 16 / 10;
   object-fit: cover;
 }
 
@@ -2520,4 +2511,8 @@ footer {
   display: grid;
   gap: 8px;
   font-size: 0.9375rem;
+}
+
+.site-footer {
+  background: #17201c;
 }
